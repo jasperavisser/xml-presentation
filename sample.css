@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Ubuntu;
+}
+table {
+	border: 2px solid gray;
+	border-spacing: 0;
+}
+td {
+	margin: 0;
+	padding: 3px 8px;
+	min-width: 12em;
+}
+td:first-child {
+	font-weight: bold;
+}
+td ~ td {
+	border-left: 1px solid gray;
+}
+tr ~ tr td {
+	border-top: 1px solid gray;
+}

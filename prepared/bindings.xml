@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<jaxb:bindings
+	xmlns:annox="http://annox.dev.java.net"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="1.0"
+	extensionBindingPrefixes="xjc">
+	<jaxb:bindings
+		schemaLocation="sample.xsd"
+		node="/xs:schema">
+		<jaxb:globalBindings>
+			<xjc:simple />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+</jaxb:bindings>

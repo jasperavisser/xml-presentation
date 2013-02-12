@@ -1,0 +1,47 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$("h1").each(function () {
+				var form = $(this).closest("form");
+				$(this).prepend(form.attr("method") + " " + form.attr("action"));
+			});
+			$("form[method='GET']").on("submit", function () {
+				location.href = $(this).attr("action") + $(this).find("input").val();
+				return false;
+			});
+			$("form").append("<input type=\"submit\">");
+		});
+	</script>
+	<style>
+		h1 { margin: 0; }
+		h1 input { font-size: 1em; }
+		h2 { margin: 0; font-style: italic; font-weight: normal; }
+	</style>
+</head>
+<body>
+
+	<hr />
+	<form method="GET" action="http://localhost:7777/document/">
+		<h1></h1>
+		<h2>Fetch list of documents</h2>
+	</form>
+
+	<hr />
+	<form method="POST" action="http://localhost:7777/document/">
+		<h1></h1>
+		<h2>Create new document</h2>
+		<textarea name="document" rows="20" cols="80"></textarea>
+		<br />
+	</form>
+
+	<hr />
+	<form method="GET" action="http://localhost:7777/document/">
+		<h1><input size="5" value="1234" /></h1>
+		<h2>Fetch a document</h2>
+	</form>
+
+	<hr />
+</body>
+</html>

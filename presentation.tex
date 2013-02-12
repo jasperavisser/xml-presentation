@@ -1,0 +1,397 @@
+\documentclass[handout]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{soul}
+\usepackage{url}
+
+% Theme.
+\usetheme{Bergen}
+\usecolortheme{rose}
+\urlstyle{same}
+\setbeamertemplate{navigation symbols}{}
+
+% Table spacing.
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{1em}
+
+% About.
+\title[XML]{XML, XSD, XJC, JAXB \& REST}
+\author[Jasper A. Visser]{Jasper A. Visser}
+\institute[Portavita]{Portavita BV}
+\logo{\includegraphics[height=10mm]{logo.jpg}\hspace{3mm}}
+\date{Februari 26\textsuperscript{th}, 2013}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Outline}
+	\tableofcontents
+\end{frame}
+
+%%%%% About %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{About}
+\begin{frame}
+	\frametitle{\insertsection}
+	\begin{block}{Goals}
+		\begin{itemize}
+			\item XML namespaces
+			\item XML schemas
+			\item Parse \& build XML in Java
+			\item Build REST webservice
+		\end{itemize}
+	\end{block}
+	\begin{semiverbatim}
+		Show sample.xml
+	\end{semiverbatim}
+\end{frame}
+
+%%%%% XML %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{XML}
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Namespaces 1/3}
+	\begin{block}{Consists of}
+		\begin{itemize}
+			\item URL $\rightarrow$ http://foo.org/
+			\item (optional) Prefix $\rightarrow$ foo\textbf{:}
+			\item (optional) Schema $\rightarrow$ foo.xsd
+		\end{itemize}
+	\end{block}
+	\begin{block}{Usage} \small
+		\textbf{xmlns}="http://foo.org/" \\
+		\textbf{xmlns:xsi}\\="\url{http://www.w3.org/2001/XMLSchema-instance}" \\
+		\textbf{xsi:schemaLocation}="http://foo.org/ foo.xsd" \\
+	\end{block}
+	\begin{block}{QName} \small
+		\{ "\url{http://www.w3.org/2001/XMLSchema-instance}", "schemaLocation" \} \\
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Namespaces 2/3}
+	\begin{block}{Purpose}
+		\begin{itemize}
+			\item Compartimentalize
+			\item Uniquely identify elements
+			\item Validate XML instance
+		\end{itemize}
+	\end{block}
+	\begin{example}
+		$<$soap:Envelope$>$ \\
+			\hspace{5mm} $<$soap:Header$>$ \\
+				\hspace{10mm} \ldots \\
+			\hspace{5mm} $<$/soap:Header$>$ \\
+			\hspace{5mm} $<$soap:Body$>$ \\
+				\hspace{10mm} \textbf{$<$foo:bar baz="qux"$>$} \\
+					\hspace{15mm} \textbf{\ldots} \\
+				\hspace{10mm} \textbf{$<$/foo:bar$>$} \\
+			\hspace{5mm} $<$/soap:Body$>$ \\
+		$<$/soap:Envelope$>$
+	\end{example}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Namespaces 3/3}
+	\begin{example}
+		$<$xsl:for-each select="//person"$>$ \\
+			\hspace{5mm} \textbf{$<$h1$>$} \\
+				\hspace{10mm} $<$xsl:value-of select="@name"$>$ \\
+			\hspace{5mm} \textbf{$<$/h1$>$} \\
+		$<$/xsl:for-each$>$ \\
+	\end{example}
+	\begin{example}
+		$<$foo:bar \textbf{xsi:type}="Baz"$>$ \\
+	\end{example}
+	\begin{semiverbatim}
+		Add namespaces to sample.xml
+	\end{semiverbatim}
+\end{frame}
+
+%%%%% XSD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{XSD}
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Define XML Schema 1/2}
+	Constrain instance document
+	\begin{block}{Consists of}
+		\begin{itemize}
+			\item Root element
+			\item Complex types $\rightarrow$ element \& attribute declarations
+			\item Simple types
+		\end{itemize}
+	\end{block}
+	\begin{block}{Root element}
+		xs:element
+	\end{block}
+	\begin{block}{Type}
+		xs:simpleType,
+		xs:complexType
+	\end{block}
+	\begin{block}{Child elements}
+		xs:sequence,
+		xs:choice,
+		minOccurs,
+		maxOccurs
+	\end{block}
+	\begin{block}{Attributes}
+		xs:string, use="required"
+	\end{block}
+	\begin{semiverbatim}
+		Create sample.xsd
+	\end{semiverbatim}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Define XML Schema 2/2}
+	\begin{block}{Enum}
+		xs:simpleType,
+		xs:restriction,
+		xs:enumeration
+	\end{block}
+	\begin{block}{Inheritance}
+		xs:complexContent,
+		xs:extension,
+		xsi:type
+	\end{block}
+	\begin{block}{Comments}
+		xs:annotation
+	\end{block}
+	\begin{semiverbatim}
+		Update sample.xsd, sample.xml
+	\end{semiverbatim}
+\end{frame}
+
+%%%%% XJC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{XJC}
+\begin{frame}
+	\frametitle{\insertsection}
+	Bundled with JDK
+	\begin{example}
+		\texttt{xjc -d src sample.xsd}
+	\end{example}
+	\begin{block}{Result}
+		http://portavita.eu/cda $\rightarrow$ package \textbf{eu.portavita.cda} \\
+		\emph{xs:complexType} Observation $\rightarrow$ \textbf{class Observation} \\
+		\emph{xs:simpleType} ClassCode $\rightarrow$ \textbf{enum ClassCode} \\
+		\emph{xs:element} code $\rightarrow$ \textbf{get-/setCode()} \\
+		\emph{xs:attribute} moodCode $\rightarrow$ \textbf{get-/setMoodCode()} \\
+	\end{block}
+	\begin{semiverbatim}
+		Compile sample.xsd; show result
+	\end{semiverbatim}
+\end{frame}
+
+%%%%% JAXB %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{JAXB}
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Annotation}
+	Part of Java SE, EE
+	\begin{block}{Class}
+		@\textbf{XmlAccessorType}(XmlAccessType.FIELD) \\
+		@\textbf{XmlType}(name = "Observation") \\
+		@\textbf{XmlRootElement}(name = "ClinicalDocument") \\
+	\end{block}
+	\begin{block}{Members}
+		@\textbf{XmlElement}(required = true) \\
+		@\textbf{XmlAttribute}(name = "classCode", required = true) \\
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Marshal, unmarshal}
+	\begin{definition}
+		\begin{itemize}
+			\item Unmarshal: XML $\rightarrow$ Objects
+			\item Marshal: Objects $\rightarrow$ XML
+		\end{itemize}
+	\end{definition}
+	\begin{semiverbatim}
+		Unmarshal sample.xml
+	\end{semiverbatim}
+	\begin{semiverbatim}
+		Create \& marshal ClinicalDocument
+	\end{semiverbatim}
+	\begin{semiverbatim}
+		Marshal 10,000 documents
+	\end{semiverbatim}
+	\begin{semiverbatim}
+		Use eclipselink JAXB Context; marshal JSON
+	\end{semiverbatim}
+	% TODO: Read about JAXBContext (what is it?)
+\end{frame}
+
+%%%%% REST %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{REST}
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Paradigm}
+	\begin{block}{Model}
+		Everything is a resource \\
+		Resources are part of collections
+	\end{block}
+	\begin{block}{CRUD}
+		\begin{itemize}
+			\item Create
+			\item Retreive
+			\item Update
+			\item Delete
+		\end{itemize}
+	\end{block}
+	\begin{block}{Hyperlinked}
+		Embed links in result sets
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Implementation}
+	\begin{block}{Protocol}
+		HTTP
+	\end{block}
+	\begin{block}{URL}
+		\textbf{Collection} \\
+		\url{http://localhost:7777/document/} \\
+		\textbf{Element} \\
+		\url{http://localhost:7777/document/12345/}
+	\end{block}
+	\begin{block}{Method}
+		\begin{tabular}{lll}
+			& \textbf{Element} & \textbf{Collection} \\
+			GET & List & Retreive \\
+			POST & - & Create \\
+			PUT & Replace & Update \\
+			DELETE & Delete & Delete \\
+		\end{tabular}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Jersey}
+	\begin{block}{Main}
+		HttpServer
+	\end{block}
+	\begin{semiverbatim}
+		Create HTTP server
+	\end{semiverbatim}
+	\begin{block}{Create}
+		\begin{itemize}
+			\item @Path
+			\item @POST
+			\item @FormParam
+		\end{itemize}
+	\end{block}
+	\begin{semiverbatim}
+		Create collection class
+	\end{semiverbatim}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\framesubtitle{Jersey}
+	\begin{block}{List}
+		\begin{itemize}
+			\item @GET
+			\item @Produces $\rightharpoonup$ media type
+		\end{itemize}
+	\end{block}
+	\begin{semiverbatim}
+		Add collection list method
+	\end{semiverbatim}
+	\begin{block}{Retreive}
+		\begin{itemize}
+			\item @GET
+			\item @PathParam
+			\item @Produces $\rightharpoonup$ media type
+		\end{itemize}
+	\end{block}
+	\begin{semiverbatim}
+		Create resource class
+	\end{semiverbatim}
+\end{frame}
+
+%%%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{References}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	XML\\
+	\begin{itemize}
+		\item \url{http://www.sitepoint.com/xml-namespaces-explained/}{}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	XSD\\
+	\begin{itemize}
+		\item \url{http://www.w3.org/XML/Schema.html\#dev}{}
+		\item \url{http://en.wikipedia.org/wiki/XML_Schema_(W3C)}{}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	XSLT\\
+	\begin{itemize}
+		\item \url{http://en.wikipedia.org/wiki/XSLT_elements}{}
+		\item \url{http://www.xsltfunctions.com/}{}
+		\item \url{http://incrementaldevelopment.com/xsltrick/}{}
+		\item \url{http://saxon.sourceforge.net/\#F9.4HE}{}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	JAXB\\
+	\begin{itemize}
+		\item \url{http://jaxb.java.net/guide/index.html}
+		\item \url{http://stackoverflow.com/questions/1514110/}
+		\item \url{http://wiki.eclipse.org/EclipseLink/Examples/MOXy/JAXB/SpecifyRuntime}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	REST\\
+	\begin{itemize}
+		\item \url{http://en.wikipedia.org/wiki/Representational_state_transfer}
+		\item \url{http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm}
+		\item \url{http://jersey.java.net/nonav/documentation/latest/user-guide.html}
+		\item \url{http://www.vogella.com/articles/REST/article.html}
+		\item \url{http://www.nakov.com/blog/2009/07/15/jax-rs-path-pathparam-and-optional-parameters/}
+		\item \url{http://engineering.linkedin.com/architecture/restli-restful-service-architecture-scale}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	JSON\\
+	\begin{itemize}
+		\item \url{http://json.org/}
+		\item \url{http://avro.apache.org/docs/current/spec.html}
+		\item \url{https://github.com/linkedin/rest.li/wiki/DATA-Data-Schema-and-Templates}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsection}
+	\LaTeX\\
+	\begin{itemize}
+		\item \url{http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/beamer/doc/beameruserguide.pdf}
+		\item \url{http://texlipse.sourceforge.net/}
+		\item \url{http://dev.cdhq.de/eclipse/word-wrap/}
+	\end{itemize}
+\end{frame}
+
+\end{document}
