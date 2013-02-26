@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <jaxb:bindings
-	xmlns:annox="http://annox.dev.java.net"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
