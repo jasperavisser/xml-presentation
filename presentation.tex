@@ -19,12 +19,15 @@
 \title[XML]{XML, XSD, XJC, JAXB \& REST}
 \author[Jasper A. Visser]{Jasper A. Visser}
 \institute[Portavita]{Portavita BV}
+\titlegraphic{\includegraphics[height=15mm]{javaxml-duke.png}}
 \logo{\includegraphics[height=10mm]{logo.jpg}\hspace{3mm}}
 \date{Februari 26\textsuperscript{th}, 2013}
 
 \begin{document}
 
 \begin{frame}
+	\inserttitlegraphic
+	\vspace{5mm}
 	\titlepage
 \end{frame}
 
@@ -173,16 +176,21 @@
 \section{XJC}
 \begin{frame}
 	\frametitle{\insertsection}
-	Bundled with JDK
+	Bundled with JDK \\
 	\begin{example}
 		\texttt{xjc -d src sample.xsd}
 	\end{example}
 	\begin{block}{Result}
-		http://portavita.eu/cda $\rightarrow$ package \textbf{eu.portavita.cda} \\
-		\emph{xs:complexType} Observation $\rightarrow$ \textbf{class Observation} \\
-		\emph{xs:simpleType} ClassCode $\rightarrow$ \textbf{enum ClassCode} \\
-		\emph{xs:element} code $\rightarrow$ \textbf{get-/setCode()} \\
-		\emph{xs:attribute} moodCode $\rightarrow$ \textbf{get-/setMoodCode()} \\
+		\begin{itemize}
+			\item http://portavita.eu/cda $\rightarrow$ package \textbf{eu.portavita.cda} \\
+			\item \emph{xs:complexType} Observation $\rightarrow$ \textbf{class Observation} \\
+			\item \emph{xs:simpleType} ClassCode $\rightarrow$ \textbf{enum ClassCode} \\
+			\item \emph{xs:element} code $\rightarrow$ \textbf{get-/setCode()} \\
+			\item \emph{xs:attribute} moodCode $\rightarrow$ \textbf{get-/setMoodCode()} \\
+		\end{itemize}
+	\end{block}
+	\begin{block}{Vice versa}
+		\texttt{schemagen Document.java}
 	\end{block}
 	\begin{semiverbatim}
 		Compile sample.xsd; show result
