@@ -44,6 +44,7 @@
 		\begin{itemize}
 			\item XML namespaces
 			\item XML schemas
+			\item Generate Java classes
 			\item Parse \& build XML in Java
 			\item Build REST webservice
 		\end{itemize}
@@ -176,7 +177,7 @@
 \section{XJC}
 \begin{frame}
 	\frametitle{\insertsection}
-	Bundled with JDK \\
+	\framesubtitle{XML Java Binding Compiler}
 	\begin{example}
 		\texttt{xjc -d src sample.xsd}
 	\end{example}
@@ -202,10 +203,12 @@
 \begin{frame}
 	\frametitle{\insertsection}
 	\framesubtitle{Annotation}
-	Part of Java SE, EE
+	\begin{block}{is}
+		Java XML Binding
+	\end{block}
 	\begin{block}{Class}
-		@\textbf{XmlAccessorType}(XmlAccessType.FIELD) \\
 		@\textbf{XmlType}(name = "Observation") \\
+		@\textbf{XmlAccessorType}(XmlAccessType.FIELD) \\
 		@\textbf{XmlRootElement}(name = "ClinicalDocument") \\
 	\end{block}
 	\begin{block}{Members}
@@ -221,6 +224,7 @@
 		\begin{itemize}
 			\item Unmarshal: XML $\rightarrow$ Objects
 			\item Marshal: Objects $\rightarrow$ XML
+			\item Validate: XML $\rightarrow$ errors
 		\end{itemize}
 	\end{definition}
 	\begin{semiverbatim}
@@ -269,12 +273,12 @@
 	\begin{block}{URL}
 		\textbf{Collection} \\
 		\url{http://localhost:7777/document/} \\
-		\textbf{Element} \\
+		\textbf{Resource} \\
 		\url{http://localhost:7777/document/12345/}
 	\end{block}
 	\begin{block}{Method}
 		\begin{tabular}{lll}
-			& \textbf{Element} & \textbf{Collection} \\
+			& \textbf{Resource} & \textbf{Collection} \\
 			GET & List & Retreive \\
 			POST & - & Create \\
 			PUT & Replace & Update \\
@@ -326,6 +330,22 @@
 	\begin{semiverbatim}
 		Create resource class
 	\end{semiverbatim}
+\end{frame}
+
+%%%%% CLOSING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Closing}
+\begin{frame}
+	\frametitle{\insertsection}
+	Thanks for your time!
+	\begin{block}{Learned}
+		\begin{itemize}
+			\item XML namespaces
+			\item XML schemas
+			\item Generate Java classes
+			\item Parse \& build XML in Java
+			\item Build REST webservice
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 %%%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
