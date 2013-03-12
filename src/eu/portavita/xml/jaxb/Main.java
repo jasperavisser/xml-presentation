@@ -1,5 +1,7 @@
 package eu.portavita.xml.jaxb;
 
+import java.io.File;
+
 import javax.xml.bind.JAXBException;
 
 public class Main {
@@ -11,7 +13,24 @@ public class Main {
 		 * (extract unmarshal method)
 		 * (re-use unmarshaller)
 		 */
+		File file = new File("sample.xml");
 
+
+		/**
+		 * Dump document to console.
+		 */
+//		for (Observation observation : document.getObservations()) {
+//			String text = observation.getCode().getDisplayName() + ": ";
+//			Value value = observation.getValue();
+//			if (value instanceof CD) {
+//				CD cd = (CD) value;
+//				text += cd.getDisplayName();
+//			} else if (value instanceof PQ) {
+//				PQ pq = (PQ) value;
+//				text += pq.getValue() + pq.getUnit();
+//			}
+//			System.out.println(text);
+//		}
 
 
 		/**
@@ -19,7 +38,7 @@ public class Main {
 		 * (extract marshal method)
 		 * (re-use marshaller)
 		 */
-
+//		Document document = DocumentSource.produce();
 
 
 		/**
@@ -27,9 +46,13 @@ public class Main {
 		 */
 //		Date started = new Date();
 //		for (int i = 0; i < 10 * 1000; i++) {
+//			getMarshaller.marshal(DocumentSource.produce());
 //		}
 //		System.out.println((new Date().getTime() - started.getTime()) + "ms");
 	}
+
+
+
 
 
 //	/**
