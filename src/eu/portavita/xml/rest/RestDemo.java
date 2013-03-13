@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
 
-public class Main {
+public class RestDemo {
 
 	public static final String URL = "http://localhost:7777/";
 

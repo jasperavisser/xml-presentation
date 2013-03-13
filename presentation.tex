@@ -40,7 +40,13 @@
 \section*{About}
 \begin{frame}
 	\frametitle{\insertsection}
-	\begin{block}{Goals}
+	\begin{block}{Purpose}
+		\begin{itemize}
+			\item Messaging
+			\item WebServices (SOAP, REST)
+		\end{itemize}
+	\end{block}
+	\begin{block}{Learn}
 		\begin{itemize}
 			\item XML namespaces
 			\item XML schemas
@@ -66,12 +72,12 @@
 			\item (optional) Schema $\rightarrow$ foo.xsd
 		\end{itemize}
 	\end{block}
-	\begin{block}{Usage} \small
+	\begin{block}{Usage} \footnotesize
 		\textbf{xmlns}="http://foo.org/" \\
-		\textbf{xmlns:xsi}\\="\url{http://www.w3.org/2001/XMLSchema-instance}" \\
+		\textbf{xmlns:xsi}="\url{http://www.w3.org/2001/XMLSchema-instance}" \\
 		\textbf{xsi:schemaLocation}="http://foo.org/ foo.xsd" \\
 	\end{block}
-	\begin{block}{QName} \small
+	\begin{block}{QName} \footnotesize
 		\{ "\url{http://www.w3.org/2001/XMLSchema-instance}", "schemaLocation" \} \\
 	\end{block}
 \end{frame}
@@ -208,7 +214,6 @@
 	\end{block}
 	\begin{block}{Class}
 		@\textbf{XmlType}(name = "Observation") \\
-		@\textbf{XmlAccessorType}(XmlAccessType.FIELD) \\
 		@\textbf{XmlRootElement}(name = "ClinicalDocument") \\
 	\end{block}
 	\begin{block}{Members}
@@ -237,15 +242,18 @@
 		Marshal 10,000 documents
 	\end{semiverbatim}
 	\begin{semiverbatim}
-		Use eclipselink JAXB Context; marshal JSON
+		Marshal JSON
 	\end{semiverbatim}
-	% TODO: Read about JAXBContext (what is it?)
 \end{frame}
 
 %%%%% REST %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{REST}
 \begin{frame}
 	\frametitle{\insertsection}
+	\begin{block}{is}
+		REpresentational State Transfer\\
+		Make WebServices (alternative: SOAP)
+	\end{block}
 	\framesubtitle{Paradigm}
 	\begin{block}{Model}
 		Everything is a resource \\
@@ -337,15 +345,6 @@
 \begin{frame}
 	\frametitle{\insertsection}
 	Thanks for your time!
-	\begin{block}{Learned}
-		\begin{itemize}
-			\item XML namespaces
-			\item XML schemas
-			\item Generate Java classes
-			\item Parse \& build XML in Java
-			\item Build REST webservice
-		\end{itemize}
-	\end{block}
 \end{frame}
 
 %%%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

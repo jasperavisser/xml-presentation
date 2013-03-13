@@ -16,7 +16,8 @@ public class DocumentResource {
 	public String getDocument(@PathParam("id") Integer id) {
 
 		// Fetch document.
-		String document = DocumentStore.getInstance().get(id);
+		DocumentStore store = DocumentStore.getInstance();
+		String document = store.get(id);
 
 		// If not found, return 404.
 		if (document == null) {

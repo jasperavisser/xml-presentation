@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.xml.bind.JAXBException;
 
-public class Main {
+public class JaxbDemo {
 
 	public static void main(String[] args) throws JAXBException {
 
