@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns="http://portavita.eu/sample/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://portavita.eu/sample/"
+	elementFormDefault="qualified">
+
+	<xs:element name="document" type="Document" />
+
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="observation" type="Observation" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Observation">
+		<xs:sequence>
+			<xs:element name="code" type="CD" />
+			<xs:element name="value" type="Value" />
+		</xs:sequence>
+		<xs:attribute name="classCode" type="ClassCode" />
+		<xs:attribute name="moodCode" type="MoodCode" />
+	</xs:complexType>
+
+	<xs:simpleType name="MoodCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EVN" />
+			<xs:enumeration value="RQO" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ClassCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OBS" />
+			<xs:enumeration value="ORG" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="CD">
+		<xs:complexContent>
+			<xs:extension base="Value">
+				<xs:attribute name="code" type="xs:string" />
+				<xs:attribute name="displayName" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Value" abstract="true" />
+
+	<xs:complexType name="PQ">
+		<xs:complexContent>
+			<xs:extension base="Value">
+				<xs:attribute name="value" type="xs:float" />
+				<xs:attribute name="unit" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

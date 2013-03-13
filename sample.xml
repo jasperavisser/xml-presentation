@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document>
+<document
+	xmlns="http://portavita.eu/sample/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://portavita.eu/sample/ sample.xsd"
+	>
 
 	<observation
 		classCode="OBS"
@@ -8,6 +12,7 @@
 			code="Portavita123"
 			displayName="Amputation" />
 		<value
+			xsi:type="CD"
 			code="R"
 			displayName="Right" />
 	</observation>
@@ -19,6 +24,7 @@
 			code="Portavita456"
 			displayName="Systolic blood pressure" />
 		<value
+			xsi:type="PQ"
 			value="80.0"
 			unit="mmHg" />
 	</observation>

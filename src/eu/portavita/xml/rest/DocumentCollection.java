@@ -1,5 +1,6 @@
 package eu.portavita.xml.rest;
 
+import java.io.StringWriter;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -8,26 +9,36 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBException;
 
 import org.apache.commons.lang3.StringUtils;
 
 import eu.portavita.helper.DocumentStore;
+import eu.portavita.sample.Document;
+import eu.portavita.xml.jaxb.JaxbDemo;
 
 @Path(value = "document")
 public class DocumentCollection {
 
 	@POST
-	@Produces("text/plain")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String createDocument(@FormParam("document") String document) {
+	@Produces("text/plain")
+	public String createDocument(@FormParam("document") Document document) {
 
 		// Write document.
 		DocumentStore store = DocumentStore.getInstance();
-		int id = store.put(document);
+		final StringWriter writer = new StringWriter();
+		try {
+			JaxbDemo.getMarshaller().marshal(document, writer);
+		} catch (JAXBException e) {
+			throw new WebApplicationException(500);
+		}
+		int id = store.put(writer.toString());
 
 		// Return id.
-		return Integer.toString(id);
+		return RestDemo.URL + "/document/" + Integer.toString(id);
 	}
 
 	@GET
